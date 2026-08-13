@@ -396,7 +396,7 @@ function tryAuth(req, _res, next) {
 
 // 细粒度权限控制：根据管理员等级限制不同能力
 const ADMIN_LEVEL = {
-  MENGSUILIANYUN: 'MENGSUILIANYUN',
+  SUPER_ADMIN: 'SUPER_ADMIN',
   SUPERVISOR: 'SUPERVISOR',
   OWNER_PRIMARY: 'OWNER_PRIMARY',
   OWNER_SECONDARY: 'OWNER_SECONDARY',
@@ -406,23 +406,23 @@ const ADMIN_LEVEL = {
 function getRestrictedAdminLevels(viewerLevel) {
   switch (viewerLevel) {
     case ADMIN_LEVEL.SUPERVISOR:
-      return new Set([ADMIN_LEVEL.MENGSUILIANYUN, ADMIN_LEVEL.SUPERVISOR])
+      return new Set([ADMIN_LEVEL.SUPER_ADMIN, ADMIN_LEVEL.SUPERVISOR])
     case ADMIN_LEVEL.OWNER_PRIMARY:
-      return new Set([ADMIN_LEVEL.MENGSUILIANYUN, ADMIN_LEVEL.SUPERVISOR, ADMIN_LEVEL.OWNER_PRIMARY])
+      return new Set([ADMIN_LEVEL.SUPER_ADMIN, ADMIN_LEVEL.SUPERVISOR, ADMIN_LEVEL.OWNER_PRIMARY])
     case ADMIN_LEVEL.OWNER_SECONDARY:
-      return new Set([ADMIN_LEVEL.MENGSUILIANYUN, ADMIN_LEVEL.SUPERVISOR, ADMIN_LEVEL.OWNER_PRIMARY, ADMIN_LEVEL.OWNER_SECONDARY])
+      return new Set([ADMIN_LEVEL.SUPER_ADMIN, ADMIN_LEVEL.SUPERVISOR, ADMIN_LEVEL.OWNER_PRIMARY, ADMIN_LEVEL.OWNER_SECONDARY])
     case ADMIN_LEVEL.STAFF:
       // 普通干事仅允许访问：仪表盘与活动报名管理
-      return new Set([ADMIN_LEVEL.MENGSUILIANYUN, ADMIN_LEVEL.SUPERVISOR, ADMIN_LEVEL.OWNER_PRIMARY, ADMIN_LEVEL.OWNER_SECONDARY, ADMIN_LEVEL.STAFF])
+      return new Set([ADMIN_LEVEL.SUPER_ADMIN, ADMIN_LEVEL.SUPERVISOR, ADMIN_LEVEL.OWNER_PRIMARY, ADMIN_LEVEL.OWNER_SECONDARY, ADMIN_LEVEL.STAFF])
     default:
-      return new Set() // 梦碎怜云：无限制
+      return new Set() // 超级管理员：无限制
   }
 }
 
 function isStaff(level) { return level === ADMIN_LEVEL.STAFF }
 
-// 轮播海报管理权限（当前仅梦碎怜云）
-function canManageHeroSlides(level) { return level === ADMIN_LEVEL.MENGSUILIANYUN }
+// 轮播海报管理权限（当前仅超级管理员）
+function canManageHeroSlides(level) { return level === ADMIN_LEVEL.SUPER_ADMIN }
 
 // 图片上传：海报/QQ群二维码
 function sanitizeUploadBaseName(fileName, fallback = 'file') {
@@ -586,15 +586,15 @@ app.post('/api/admin/upload/document', auth, adminAuth, uploadDocument.single('f
     return res.status(500).json({ code: 'SERVER_ERROR', message: '公告附件上传失败' })
   }
 })
-// ====== 主海报设置（仅梦碎怜云） ======
-function isMengSuiLianYun(level) { return level === ADMIN_LEVEL.MENGSUILIANYUN }
+// ====== 主海报设置（仅超级管理员） ======
+function isSuperAdmin(level) { return level === ADMIN_LEVEL.SUPER_ADMIN }
 const HERO_MAIN_CONFIG = path.join(UPLOAD_DIR, 'hero-main.json')
 
 // 读取主海报设置
 app.get('/api/admin/hero/main', auth, adminAuth, async (req, res) => {
   try {
-    if (!isMengSuiLianYun(req.adminLevel)) {
-      return res.status(403).json({ code: 'FORBIDDEN', message: '仅梦碎怜云可操作主海报设置' })
+    if (!isSuperAdmin(req.adminLevel)) {
+      return res.status(403).json({ code: 'FORBIDDEN', message: '仅超级管理员可操作主海报设置' })
     }
     let url = ''
     if (fs.existsSync(HERO_MAIN_CONFIG)) {
@@ -613,8 +613,8 @@ app.get('/api/admin/hero/main', auth, adminAuth, async (req, res) => {
 // 设置/清除主海报
 app.post('/api/admin/hero/main', auth, adminAuth, async (req, res) => {
   try {
-    if (!isMengSuiLianYun(req.adminLevel)) {
-      return res.status(403).json({ code: 'FORBIDDEN', message: '仅梦碎怜云可操作主海报设置' })
+    if (!isSuperAdmin(req.adminLevel)) {
+      return res.status(403).json({ code: 'FORBIDDEN', message: '仅超级管理员可操作主海报设置' })
     }
     const b = req.body || {}
     let url = String(b.url || '').trim()
@@ -639,11 +639,11 @@ app.post('/api/admin/hero/main', auth, adminAuth, async (req, res) => {
   }
 })
 
-// ====== 轮播海报 CRUD（仅梦碎怜云） ======
+// ====== 轮播海报 CRUD（仅超级管理员） ======
 app.get('/api/admin/hero-slides', auth, adminAuth, async (req, res) => {
   try {
     if (!canManageHeroSlides(req.adminLevel)) {
-      return res.status(403).json({ code: 'FORBIDDEN', message: '仅梦碎怜云可管理轮播海报' })
+      return res.status(403).json({ code: 'FORBIDDEN', message: '仅超级管理员可管理轮播海报' })
     }
     const items = await prisma.heroSlide.findMany({ orderBy: { sortOrder: 'asc' } })
     return res.json({ items })
@@ -656,7 +656,7 @@ app.get('/api/admin/hero-slides', auth, adminAuth, async (req, res) => {
 app.post('/api/admin/hero-slides', auth, adminAuth, async (req, res) => {
   try {
     if (!canManageHeroSlides(req.adminLevel)) {
-      return res.status(403).json({ code: 'FORBIDDEN', message: '仅梦碎怜云可管理轮播海报' })
+      return res.status(403).json({ code: 'FORBIDDEN', message: '仅超级管理员可管理轮播海报' })
     }
     const b = req.body || {}
     const imageUrl = String(b.imageUrl || '').trim()
@@ -684,7 +684,7 @@ app.post('/api/admin/hero-slides', auth, adminAuth, async (req, res) => {
 app.put('/api/admin/hero-slides/:id', auth, adminAuth, async (req, res) => {
   try {
     if (!canManageHeroSlides(req.adminLevel)) {
-      return res.status(403).json({ code: 'FORBIDDEN', message: '仅梦碎怜云可管理轮播海报' })
+      return res.status(403).json({ code: 'FORBIDDEN', message: '仅超级管理员可管理轮播海报' })
     }
     const id = Number(req.params.id)
     const b = req.body || {}
@@ -717,7 +717,7 @@ app.put('/api/admin/hero-slides/:id', auth, adminAuth, async (req, res) => {
 app.delete('/api/admin/hero-slides/:id', auth, adminAuth, async (req, res) => {
   try {
     if (!canManageHeroSlides(req.adminLevel)) {
-      return res.status(403).json({ code: 'FORBIDDEN', message: '仅梦碎怜云可管理轮播海报' })
+      return res.status(403).json({ code: 'FORBIDDEN', message: '仅超级管理员可管理轮播海报' })
     }
     const id = Number(req.params.id)
     await prisma.heroSlide.delete({ where: { id } })
@@ -732,7 +732,7 @@ app.delete('/api/admin/hero-slides/:id', auth, adminAuth, async (req, res) => {
 app.post('/api/admin/hero-slides/reorder', auth, adminAuth, async (req, res) => {
   try {
     if (!canManageHeroSlides(req.adminLevel)) {
-      return res.status(403).json({ code: 'FORBIDDEN', message: '仅梦碎怜云可管理轮播海报' })
+      return res.status(403).json({ code: 'FORBIDDEN', message: '仅超级管理员可管理轮播海报' })
     }
     const ids = Array.isArray(req.body?.ids) ? req.body.ids.map((x) => Number(x)) : []
     if (!ids.length) return res.status(400).json({ code: 'VALIDATION_ERROR', message: '请提供待排序的 id 列表' })
@@ -1430,7 +1430,7 @@ app.post('/api/admin/auth/login', async (req, res) => {
 
     // 等级校验（传入中文等级映射到枚举）
     const map = {
-      '梦碎怜云': 'MENGSUILIANYUN',
+      '超级管理员': 'SUPER_ADMIN',
       '主管老师': 'SUPERVISOR',
       '第一负责人': 'OWNER_PRIMARY',
       '第二负责人': 'OWNER_SECONDARY',
@@ -1502,11 +1502,11 @@ app.post('/api/admin/activities', auth, adminAuth, async (req, res) => {
   const posterSizeBytes = b.posterSizeBytes != null ? Number(b.posterSizeBytes) : null
   const qqGroupQrUrl = String(b.qqGroupQrUrl || '').trim() || null
   const qqGroupQrSizeBytes = b.qqGroupQrSizeBytes != null ? Number(b.qqGroupQrSizeBytes) : null
-  // 推广：链接与图片（仅 OWNER_PRIMARY/SUPERVISOR/MENGSUILIANYUN 可配置）
+  // 推广：链接与图片（仅 OWNER_PRIMARY/SUPERVISOR/SUPER_ADMIN 可配置）
   const promoLinkUrl = String(b.promoLinkUrl || '').trim()
   const promoImageUrl = String(b.promoImageUrl || '').trim() || null
   const promoImageSizeBytes = b.promoImageSizeBytes != null ? Number(b.promoImageSizeBytes) : null
-  const promoAllowed = new Set([ADMIN_LEVEL.OWNER_PRIMARY, ADMIN_LEVEL.SUPERVISOR, ADMIN_LEVEL.MENGSUILIANYUN]).has(req.adminLevel)
+  const promoAllowed = new Set([ADMIN_LEVEL.OWNER_PRIMARY, ADMIN_LEVEL.SUPERVISOR, ADMIN_LEVEL.SUPER_ADMIN]).has(req.adminLevel)
   // 报名开关：允许管理员在创建时指定活动状态（默认 PUBLISHED）。
   // 仅允许有限集合，避免误设为 FINISHED/CANCELED 等终结态。
   const allowedCreateStatuses = new Set(['PUBLISHED', 'OPEN', 'CLOSED'])
@@ -1582,7 +1582,7 @@ app.put('/api/admin/activities/:id', auth, adminAuth, async (req, res) => {
   if (registerDeadline && startAt && registerDeadline > startAt) {
     return res.status(400).json({ code: 'VALIDATION_ERROR', message: '报名截止时间需不晚于举办时间' })
   }
-  const promoAllowed = new Set([ADMIN_LEVEL.OWNER_PRIMARY, ADMIN_LEVEL.SUPERVISOR, ADMIN_LEVEL.MENGSUILIANYUN]).has(req.adminLevel)
+  const promoAllowed = new Set([ADMIN_LEVEL.OWNER_PRIMARY, ADMIN_LEVEL.SUPERVISOR, ADMIN_LEVEL.SUPER_ADMIN]).has(req.adminLevel)
   const wantPromoWrite = (b.promoLinkUrl != null) || (b.promoImageUrl != null) || (b.promoImageSizeBytes != null)
   if (wantPromoWrite && !promoAllowed) {
     return res.status(403).json({ code: 'FORBIDDEN', message: '仅第一负责人及以上可设置推广链接与宣传图片' })
@@ -2150,7 +2150,7 @@ app.post('/api/admin/users/create', auth, adminAuth, async (req, res) => {
   if (!lvl) {
     return res.status(400).json({ code: 'VALIDATION_ERROR', message: '请选择管理员等级' })
   }
-  const allowed = ['MENGSUILIANYUN', 'SUPERVISOR', 'OWNER_PRIMARY', 'OWNER_SECONDARY', 'STAFF']
+  const allowed = ['SUPER_ADMIN', 'SUPERVISOR', 'OWNER_PRIMARY', 'OWNER_SECONDARY', 'STAFF']
   if (!allowed.includes(lvl)) {
     return res.status(400).json({ code: 'VALIDATION_ERROR', message: '管理员等级不合法' })
   }
@@ -2277,7 +2277,7 @@ app.post('/api/admin/users/batch-update', auth, adminAuth, async (req, res) => {
   }
   if (p.adminLevel != null) {
     const lvl = String(p.adminLevel).trim()
-    const allowed = ['MENGSUILIANYUN', 'SUPERVISOR', 'OWNER_PRIMARY', 'OWNER_SECONDARY', 'STAFF']
+    const allowed = ['SUPER_ADMIN', 'SUPERVISOR', 'OWNER_PRIMARY', 'OWNER_SECONDARY', 'STAFF']
     if (!allowed.includes(lvl)) {
       return res.status(400).json({ code: 'VALIDATION_ERROR', message: '管理员等级不合法' })
     }

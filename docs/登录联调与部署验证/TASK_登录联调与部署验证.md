@@ -9,10 +9,10 @@
    - 验收：200 OK 且返回 ok=true。
 
 2. 管理员登录联调（开发环境）
-   - 输入：studentId=mengsuilianyun，password=CHANGE_ME，level=梦碎怜云。
+   - 输入：studentId=admin1，password=CHANGE_ME，level=超级管理员。
    - 操作：在 /admin/login 提交；观察跳转与 localStorage token。
    - 输出：跳转 /admin/dashboard，token 写入。
-   - 验收：UI成功进入后台仪表盘，GET /api/users/me 显示 role=ADMIN、adminLevel=MENGSUILIANYUN。
+   - 验收：UI成功进入后台仪表盘，GET /api/users/me 显示 role=ADMIN、adminLevel=SUPER_ADMIN。
 
 3. 学生登录联调（开发环境）
    - 输入：studentId=202511080001，password=CHANGE_ME。

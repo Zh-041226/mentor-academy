@@ -177,7 +177,7 @@ function formatDate(d) {
 const me = ref(null)
 const level = computed(() => me.value?.adminLevel || '')
 const isStaff = computed(() => level.value === 'STAFF')
-const isPromoAllowed = computed(() => ['OWNER_PRIMARY', 'SUPERVISOR', 'MENGSUILIANYUN'].includes(level.value))
+const isPromoAllowed = computed(() => ['OWNER_PRIMARY', 'SUPERVISOR', 'SUPER_ADMIN'].includes(level.value))
 
 async function fetchMe() {
   try {

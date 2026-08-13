@@ -97,7 +97,7 @@ curl -sS -X POST http://localhost:3001/api/admin/auth/login \
   -d '{"username":"<管理员用户名或学号>","password":"<密码>","level":"普通干事"}'
 ```
 
-预期：返回 `{"token":"<JWT>"}`。`level` 支持中文等级映射：`梦碎怜云/主管老师/第一负责人/第二负责人/普通干事`。
+预期：返回 `{"token":"<JWT>"}`。`level` 支持中文等级映射：`超级管理员/主管老师/第一负责人/第二负责人/普通干事`。
 
 ### 7. 管理员出勤标记（已到）
 
@@ -146,7 +146,7 @@ curl -sS -X POST http://localhost:3001/api/admin/activities/<activityId>/registr
 ## 完成情况记录
 
 - [x] 后端服务已在本地 3001 正常启动（npm run start），/api/health 返回 { ok: true }。
-- [x] 管理员 API 端到端验证成功（POST /api/admin/auth/login → 200，获取 token；GET /api/users/me → ADMIN/MENGSUILIANYUN）。
+- [x] 管理员 API 端到端验证成功（POST /api/admin/auth/login → 200，获取 token；GET /api/users/me → ADMIN/SUPER_ADMIN）。
 - [x] 学生 API 端到端验证成功（POST /api/auth/login → 200，获取 token；GET /api/users/me → STUDENT/null）。
 - [ ] 开发环境前端 UI 管理员登录验证（/admin/login → 跳转 /admin/dashboard）。
 - [ ] 开发环境前端 UI 学生登录验证（/login → 跳转 /activities）。

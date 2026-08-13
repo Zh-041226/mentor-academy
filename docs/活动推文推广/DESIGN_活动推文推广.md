@@ -39,7 +39,7 @@ flowchart LR
   - ActivityDetail.vue：推广区条件渲染、图片点击跳转、移动端自适应。
 - 后端：
   - `/api/admin/upload/image`：支持 `type=promo`，限制 10MB，返回文件名与大小。
-  - `/api/admin/activities`：POST/PUT 校验权限（OWNER_PRIMARY、SUPERVISOR、MENGSUILIANYUN），校验 URL 前缀。
+  - `/api/admin/activities`：POST/PUT 校验权限（OWNER_PRIMARY、SUPERVISOR、SUPER_ADMIN），校验 URL 前缀。
   - Prisma 模型扩展与迁移部署。
 
 ## 模块依赖关系图
@@ -60,7 +60,7 @@ graph TD
     - `promoLinkUrl`?: string (必须以 http/https 开头)
     - `promoImageUrl`?: string
     - `promoImageSizeBytes`?: number
-  - RBAC：仅 OWNER_PRIMARY、SUPERVISOR、MENGSUILIANYUN 可设置上述字段；其他角色设置将返回 403。
+  - RBAC：仅 OWNER_PRIMARY、SUPERVISOR、SUPER_ADMIN 可设置上述字段；其他角色设置将返回 403。
   - Response：标准活动对象，包含上述字段。
 
 - POST `/api/admin/upload/image?type=promo`

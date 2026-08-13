@@ -2,7 +2,7 @@
 
 ## 需求描述
 - 为每个活动新增「推文推广」区域：当同时存在推广链接（promoLinkUrl）与宣传图片（promoImageUrl）时，在活动详情页显示一张可点击的宣传图片，点击后在新标签页打开推广链接（安全：`target="_blank"` + `rel="noopener"`）。
-- 管理端允许具备高权限管理员（OWNER_PRIMARY、SUPERVISOR、MENGSUILIANYUN）设置推广链接与上传宣传图片；低权限（OWNER_SECONDARY、STAFF）不可设置，若尝试设置后端返回 403。
+- 管理端允许具备高权限管理员（OWNER_PRIMARY、SUPERVISOR、SUPER_ADMIN）设置推广链接与上传宣传图片；低权限（OWNER_SECONDARY、STAFF）不可设置，若尝试设置后端返回 403。
 - 图片上传复用现有接口 `/api/admin/upload/image`，新增 `type=promo`；大小限制沿用海报 10MB；支持 JPEG/PNG/WebP。
 - 链接校验：仅允许 `http://` 或 `https://` 开头。
 

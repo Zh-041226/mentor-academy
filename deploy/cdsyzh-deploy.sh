@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 导师进书院系统部署脚本 - cdsyzh.cn
-# 服务器IP: 121.41.168.208
+# 服务器IP: YOUR_SERVER_IP
 # 域名: cdsyzh.cn
 # 使用方法: chmod +x cdsyzh-deploy.sh && ./cdsyzh-deploy.sh
 
@@ -23,7 +23,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 echo "📋 服务器信息:"
-echo "   - 公网IP: 121.41.168.208"
+echo "   - 公网IP: YOUR_SERVER_IP"
 echo "   - 域名: $DOMAIN"
 echo "   - 项目目录: $PROJECT_DIR"
 echo ""
@@ -80,7 +80,7 @@ systemctl enable mysql
 
 # 10. 检查域名解析
 echo "🔍 检查域名解析..."
-if nslookup $DOMAIN | grep -q "121.41.168.208"; then
+if nslookup $DOMAIN | grep -q "YOUR_SERVER_IP"; then
     echo "✅ 域名解析正确"
 else
     echo "⚠️  域名解析可能还未生效，请稍后再试"
@@ -92,8 +92,8 @@ echo ""
 echo "📋 接下来请按以下步骤操作："
 echo ""
 echo "1️⃣ 上传项目文件到服务器："
-echo "   scp -r backend/ root@121.41.168.208:/var/www/mentor-academy/"
-echo "   scp -r frontend/dist/ root@121.41.168.208:/var/www/mentor-academy/frontend/"
+echo "   scp -r backend/ root@YOUR_SERVER_IP:/var/www/mentor-academy/"
+echo "   scp -r frontend/dist/ root@YOUR_SERVER_IP:/var/www/mentor-academy/frontend/"
 echo ""
 echo "2️⃣ 配置后端环境："
 echo "   cd $BACKEND_DIR"

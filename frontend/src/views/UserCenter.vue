@@ -400,7 +400,7 @@ function roleText(role) {
 
 function formatLevelCn(level) {
   if (!level) return '—'
-  const map = { MENGSUILIANYUN: '梦碎怜云', SUPERVISOR: '主管老师', OWNER_PRIMARY: '第一负责人', OWNER_SECONDARY: '第二负责人', STAFF: '普通干事' }
+  const map = { SUPER_ADMIN: '超级管理员', SUPERVISOR: '主管老师', OWNER_PRIMARY: '第一负责人', OWNER_SECONDARY: '第二负责人', STAFF: '普通干事' }
   return map[level] || level
 }
 

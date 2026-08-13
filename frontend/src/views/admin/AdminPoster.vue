@@ -16,7 +16,7 @@ async function getSortable() {
 // 权限
 const me = ref(null)
 const level = computed(() => me.value?.adminLevel || '')
-const isMengsuilianyun = computed(() => level.value === 'MENGSUILIANYUN')
+const isSuperAdmin = computed(() => level.value === 'SUPER_ADMIN')
 
 // 状态
 const loading = ref(false)
@@ -170,12 +170,12 @@ onMounted(async () => {
       <template #header>
         <div class="card-header">
           <span>轮播海报管理</span>
-          <el-button v-if="isMengsuilianyun" type="primary" class="btn-sunset" @click="openEditDialog()">新增海报</el-button>
+          <el-button v-if="isSuperAdmin" type="primary" class="btn-sunset" @click="openEditDialog()">新增海报</el-button>
         </div>
       </template>
       <div v-if="loading">正在加载...</div>
       <template v-else>
-        <div v-if="!isMengsuilianyun" class="hint">仅“梦碎怜云”可操作</div>
+        <div v-if="!isSuperAdmin" class="hint">仅“超级管理员”可操作</div>
         <div v-else>
           <div v-if="!list.length" class="empty">暂无海报，请新增</div>
           <div v-else class="list-container" ref="listRef">

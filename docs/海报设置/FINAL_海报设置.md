@@ -2,7 +2,7 @@
 
 ## 实现概述
 
-- 新增 AdminPoster.vue 与 /admin/poster 路由、菜单入口（仅梦碎怜云）
+- 新增 AdminPoster.vue 与 /admin/poster 路由、菜单入口（仅超级管理员）
 - 新增 /api/admin/hero/main（GET/POST）用于读取与设置主海报
 - 修改 /api/hero-slides 将主海报置于第一项，并保留原有兜底逻辑
 - 优化 HomeHeroCarousel 在开发环境也尝试拉取后端列表

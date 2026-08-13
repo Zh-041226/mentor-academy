@@ -23,10 +23,10 @@ const myLevel = computed(() => me.value?.adminLevel || '')
 const isStaff = computed(() => myLevel.value === 'STAFF')
 function getRestrictedSet(level) {
   switch (level) {
-    case 'SUPERVISOR': return new Set(['MENGSUILIANYUN', 'SUPERVISOR'])
-    case 'OWNER_PRIMARY': return new Set(['MENGSUILIANYUN', 'SUPERVISOR', 'OWNER_PRIMARY'])
-    case 'OWNER_SECONDARY': return new Set(['MENGSUILIANYUN', 'SUPERVISOR', 'OWNER_PRIMARY', 'OWNER_SECONDARY'])
-    case 'STAFF': return new Set(['MENGSUILIANYUN', 'SUPERVISOR', 'OWNER_PRIMARY', 'OWNER_SECONDARY', 'STAFF'])
+    case 'SUPERVISOR': return new Set(['SUPER_ADMIN', 'SUPERVISOR'])
+    case 'OWNER_PRIMARY': return new Set(['SUPER_ADMIN', 'SUPERVISOR', 'OWNER_PRIMARY'])
+    case 'OWNER_SECONDARY': return new Set(['SUPER_ADMIN', 'SUPERVISOR', 'OWNER_PRIMARY', 'OWNER_SECONDARY'])
+    case 'STAFF': return new Set(['SUPER_ADMIN', 'SUPERVISOR', 'OWNER_PRIMARY', 'OWNER_SECONDARY', 'STAFF'])
     default: return new Set()
   }
 }
@@ -74,7 +74,7 @@ const roleOptions = [
   { label: '管理员', value: 'ADMIN' }
 ]
 const adminLevelOptions = [
-  { label: '梦碎怜云', value: 'MENGSUILIANYUN' },
+  { label: '超级管理员', value: 'SUPER_ADMIN' },
   { label: '主管老师', value: 'SUPERVISOR' },
   { label: '第一负责人', value: 'OWNER_PRIMARY' },
   { label: '第二负责人', value: 'OWNER_SECONDARY' },
@@ -269,7 +269,7 @@ function formatRoleCn(role) {
 }
 
 const levelMapCn = {
-  MENGSUILIANYUN: '梦碎怜云',
+  SUPER_ADMIN: '超级管理员',
   SUPERVISOR: '主管老师',
   OWNER_PRIMARY: '第一负责人',
   OWNER_SECONDARY: '第二负责人',

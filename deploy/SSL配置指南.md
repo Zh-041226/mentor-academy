@@ -11,7 +11,7 @@ Let's Encrypt 提供免费的SSL证书，有效期90天，支持自动续期。
 ```bash
 # 确保域名已正确解析到服务器IP
 nslookup cdsyzh.cn
-# 应该返回 121.41.168.208
+# 应该返回 YOUR_SERVER_IP
 
 # 确保80和443端口开放
 ufw allow 80

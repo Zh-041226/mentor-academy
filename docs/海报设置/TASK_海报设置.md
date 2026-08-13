@@ -3,7 +3,7 @@
 ## 原子任务
 
 1. 后端：实现主海报管理接口
-   - 输入：JWT 鉴权、adminLevel=MENGSUILIANYUN、body.url
+   - 输入：JWT 鉴权、adminLevel=SUPER_ADMIN、body.url
    - 输出：uploads/hero-main.json、接口响应
    - 约束：仅 /uploads/ 路径、文件必须存在
 
@@ -17,7 +17,7 @@
 
 4. 前端：菜单与路由
    - 输入：AdminLayout.vue、router/index.js
-   - 输出：仅梦碎怜云显示入口、/admin/poster 路由
+   - 输出：仅超级管理员显示入口、/admin/poster 路由
 
 5. 前端：HomeHeroCarousel 优化
    - 输入：默认本地 slides、后端接口

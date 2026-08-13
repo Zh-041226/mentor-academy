@@ -15,7 +15,7 @@
 
 ## 操作步骤（建议）
 1. 使用 OWNER_PRIMARY 账号登录管理端（AdminLogin.vue 对应的 /admin/login）：
-   - 例如：选择「第一负责人」，用户名 `zenghao`，密码 `CHANGE_ME`（参考 seed_admins.js）。
+   - 例如：选择「第一负责人」，用户名 `admin3`，密码 `CHANGE_ME`（参考 seed_admins.js）。
 2. 进入「活动管理」，创建或编辑活动：
    - 填写推文链接（需以 http/https 开头，如 `https://example.com/post`）。
    - 上传宣传图片（≤10MB），预览确认。

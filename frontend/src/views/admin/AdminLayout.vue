@@ -10,7 +10,7 @@ const me = ref(null)
 const drawerVisible = ref(false)
 const level = computed(() => me.value?.adminLevel || '')
 const isStaff = computed(() => level.value === 'STAFF')
-const isMengsuilianyun = computed(() => level.value === 'MENGSUILIANYUN')
+const isSuperAdmin = computed(() => level.value === 'SUPER_ADMIN')
 const menuGroups = computed(() => {
   const base = [
     {
@@ -24,7 +24,7 @@ const menuGroups = computed(() => {
       title: '系统管理',
       items: [
         ...(!isStaff.value ? [{ path: '/admin/activities', label: '活动管理', icon: '●' }, { path: '/admin/announcements', label: '公告管理', icon: '●' }, { path: '/admin/users', label: '用户管理', icon: '●' }] : []),
-        ...(isMengsuilianyun.value ? [{ path: '/admin/poster', label: '海报设置', icon: '●' }] : [])
+        ...(isSuperAdmin.value ? [{ path: '/admin/poster', label: '海报设置', icon: '●' }] : [])
       ]
     }
   ]

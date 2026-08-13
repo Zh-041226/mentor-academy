@@ -17,7 +17,7 @@ const loading = ref(false)
 const form = ref({ level: '', username: '', password: '' })
 
 const levels = [
-  '梦碎怜云',
+  '超级管理员',
   '主管老师',
   '第一负责人',
   '第二负责人',

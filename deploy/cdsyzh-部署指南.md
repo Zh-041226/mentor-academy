@@ -3,7 +3,7 @@
 ## 📋 服务器信息
 
 - **实例ID**: 051b2d65035143bc90cb9126fabd0f37
-- **公网IP**: 121.41.168.208
+- **公网IP**: YOUR_SERVER_IP
 - **私有IP**: 172.25.55.160
 - **域名**: cdsyzh.cn
 - **系统**: Ubuntu 20.04+ (推荐)
@@ -14,7 +14,7 @@
 
 ```bash
 # 使用SSH连接到您的服务器
-ssh root@121.41.168.208
+ssh root@YOUR_SERVER_IP
 
 # 或者使用阿里云控制台的远程连接功能
 ```
@@ -25,7 +25,7 @@ ssh root@121.41.168.208
 
 ```bash
 # 在本地执行（Windows PowerShell）
-scp -r deploy/ root@121.41.168.208:/root/
+scp -r deploy/ root@YOUR_SERVER_IP:/root/
 
 # 或者使用 WinSCP、FileZilla 等工具上传
 ```
@@ -60,14 +60,14 @@ npm run build
 
 ```bash
 # 上传后端代码
-scp -r backend/ root@121.41.168.208:/var/www/mentor-academy/
+scp -r backend/ root@YOUR_SERVER_IP:/var/www/mentor-academy/
 
 # 上传前端构建文件
-scp -r frontend/dist/ root@121.41.168.208:/var/www/mentor-academy/frontend/
+scp -r frontend/dist/ root@YOUR_SERVER_IP:/var/www/mentor-academy/frontend/
 
 # 上传部署配置
-scp deploy/.env.production root@121.41.168.208:/var/www/mentor-academy/backend/.env
-scp deploy/ecosystem.config.js root@121.41.168.208:/var/www/mentor-academy/
+scp deploy/.env.production root@YOUR_SERVER_IP:/var/www/mentor-academy/backend/.env
+scp deploy/ecosystem.config.js root@YOUR_SERVER_IP:/var/www/mentor-academy/
 ```
 
 ### 第六步：配置后端
@@ -112,12 +112,12 @@ pm2 status
 ```
 类型: A
 主机记录: @
-记录值: 121.41.168.208
+记录值: YOUR_SERVER_IP
 TTL: 600
 
 类型: A  
 主机记录: www
-记录值: 121.41.168.208
+记录值: YOUR_SERVER_IP
 TTL: 600
 ```
 

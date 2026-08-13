@@ -170,7 +170,7 @@ enum activity_status {
 }
 
 enum user_adminLevel {
-  MENGSUILIANYUN
+  SUPER_ADMIN
   SUPERVISOR
   OWNER_PRIMARY
   OWNER_SECONDARY

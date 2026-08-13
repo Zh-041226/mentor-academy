@@ -17,7 +17,7 @@
 ### T3. 后端活动创建/更新权限与校验
 - 输入契约：POST/PUT `/api/admin/activities`；携带 promo 字段
 - 输出契约：权限允许则写入；权限不允许返回 403；URL 非法返回 400
-- 实现约束：角色仅 OWNER_PRIMARY、SUPERVISOR、MENGSUILIANYUN 可设置；校验 `http/https` 链接
+- 实现约束：角色仅 OWNER_PRIMARY、SUPERVISOR、SUPER_ADMIN 可设置；校验 `http/https` 链接
 - 依赖关系：前端表单提交与用户端展示的基础
 
 ### T4. 前端管理端表单与上传

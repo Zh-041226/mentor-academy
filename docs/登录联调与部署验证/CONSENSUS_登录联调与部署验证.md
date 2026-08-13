@@ -41,9 +41,9 @@
 
 ## 验收标准（可测试）
 1. 开发环境：
-   - 在 http://localhost:3000/admin/login 使用管理员账号（studentId=mengsuilianyun，password=CHANGE_ME，level=梦碎怜云）登录成功并跳转至 /admin/dashboard；localStorage 存在 token。
+   - 在 http://localhost:3000/admin/login 使用管理员账号（studentId=admin1，password=CHANGE_ME，level=超级管理员）登录成功并跳转至 /admin/dashboard；localStorage 存在 token。
    - 在 http://localhost:3000/login 使用学生账号（studentId=202511080001，password=CHANGE_ME）登录成功并跳转至 /activities；localStorage 存在 token。
-   - 登录后访问 /api/users/me 返回 role 与 adminLevel（管理员：ADMIN/MENGSUILIANYUN；学生：STUDENT/null）。
+   - 登录后访问 /api/users/me 返回 role 与 adminLevel（管理员：ADMIN/SUPER_ADMIN；学生：STUDENT/null）。
 2. 生产环境：
    - 通过域名访问前端页面，/api 由 Nginx 代理至 3001，登录流程成功，浏览器网络面板无 CORS/mixed-content 错误。
 3. 健康检查：

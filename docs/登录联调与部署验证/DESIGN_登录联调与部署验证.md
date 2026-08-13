@@ -46,7 +46,7 @@ flowchart TD
   - body: { studentId: string(12 digits), password: string(6-12 alnum) }
   - resp: { token: string }
 - POST /api/admin/auth/login
-  - body: { studentId: string, password: string, level: '梦碎怜云'|'主管老师'|'第一负责人'|'第二负责人'|'普通干事' }
+  - body: { studentId: string, password: string, level: '超级管理员'|'主管老师'|'第一负责人'|'第二负责人'|'普通干事' }
   - resp: { token: string }
 - GET /api/users/me
   - headers: Authorization: Bearer <token>

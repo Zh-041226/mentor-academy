@@ -5,12 +5,12 @@ const prisma = new PrismaClient()
 
 // 初始管理员数据（studentId 作为用户名；password 将进行哈希；adminLevel 枚举）
 const admins = [
-  { studentId: 'mengsuilianyun', password: 'CHANGE_ME', adminLevel: 'MENGSUILIANYUN' },
-  { studentId: 'zhuyanping',     password: 'CHANGE_ME',   adminLevel: 'SUPERVISOR' },
-  { studentId: 'zenghao',        password: 'CHANGE_ME',   adminLevel: 'OWNER_PRIMARY' },
-  { studentId: 'guzhuzhu',       password: 'CHANGE_ME',   adminLevel: 'OWNER_SECONDARY' },
-  { studentId: 'yuanxianghua',   password: 'CHANGE_ME',   adminLevel: 'OWNER_SECONDARY' },
-  { studentId: 'liuzhenqi',      password: 'CHANGE_ME',   adminLevel: 'STAFF' }
+  { studentId: 'admin1', password: 'CHANGE_ME', adminLevel: 'SUPER_ADMIN' },
+  { studentId: 'admin2',     password: 'CHANGE_ME',   adminLevel: 'SUPERVISOR' },
+  { studentId: 'admin3',        password: 'CHANGE_ME',   adminLevel: 'OWNER_PRIMARY' },
+  { studentId: 'admin4',       password: 'CHANGE_ME',   adminLevel: 'OWNER_SECONDARY' },
+  { studentId: 'admin5',   password: 'CHANGE_ME',   adminLevel: 'OWNER_SECONDARY' },
+  { studentId: 'admin6',      password: 'CHANGE_ME',   adminLevel: 'STAFF' }
 ]
 
 async function seed() {
