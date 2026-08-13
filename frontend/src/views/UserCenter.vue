@@ -165,7 +165,7 @@
                   </div>
                 </div>
                 
-                <div class="ios-tips">仅允许修改联系方式与密码，其他信息如需修改请联系管理员（电话：15258719765）。</div>
+                <div class="ios-tips">仅允许修改联系方式与密码，其他信息如需修改请联系管理员（电话：00000000000）。</div>
                 
                 <div class="ios-actions-group">
                   <button type="button" class="ios-action-btn primary" @click="startEdit" :disabled="loading">
@@ -287,9 +287,9 @@
                   </el-descriptions-item>
                 </el-descriptions>
               </template>
-              <div class="tips">仅允许修改联系方式与密码，其他信息不可修改。如需修改其他信息请联系管理员（电话：15258719765）。</div>
+              <div class="tips">仅允许修改联系方式与密码，其他信息不可修改。如需修改其他信息请联系管理员（电话：00000000000）。</div>
               <div v-if="me.isBanned" style="margin-top:8px;">
-                <el-alert type="error" :title="`当前处于禁报名期，禁至 ${me.bannedUntil?new Date(me.bannedUntil).toLocaleDateString():'—'}（剩余 ${me.banRemainingDays} 天）。如有疑问请联系管理员（电话：15258719765）。`" show-icon />
+                <el-alert type="error" :title="`当前处于禁报名期，禁至 ${me.bannedUntil?new Date(me.bannedUntil).toLocaleDateString():'—'}（剩余 ${me.banRemainingDays} 天）。如有疑问请联系管理员（电话：00000000000）。`" show-icon />
               </div>
               <div style="margin-top:20px;">
                 <el-button type="danger" @click="logout">退出登录</el-button>

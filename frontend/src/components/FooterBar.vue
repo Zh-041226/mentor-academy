@@ -9,7 +9,7 @@
           <path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.05-.24c1.12.37 2.33.57 3.54.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C11.4 21 3 12.6 3 3a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.21.2 2.42.57 3.54a1 1 0 0 1-.24 1.05l-2.21 2.2Z" fill="currentColor"></path>
         </svg>
         <span>电话：</span>
-        <a class="link-sunset" href="tel:15258719765">15258719765</a>
+        <a class="link-sunset" href="tel:00000000000">00000000000</a>
       </span>
       <span class="sep" aria-hidden="true">·</span>
       <span class="item">
@@ -17,7 +17,7 @@
           <path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6Zm2 .5 8 5 8-5V6H4v.5Zm0 2.62V18h16V9.12l-8 5-8-5Z" fill="currentColor"></path>
         </svg>
         <span>邮箱：</span>
-        <a class="link-sunset" href="mailto:2636166741@qq.com">2636166741@qq.com</a>
+        <a class="link-sunset" href="mailto:contact@example.com">contact@example.com</a>
       </span>
     </div>
   </footer>
