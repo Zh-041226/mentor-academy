@@ -1,0 +1,20 @@
+.container { padding: 12px; }
+.header { margin-bottom: 8px; }
+.title { font-size: 20px; font-weight: 600; }
+.sub { color: #666; margin-top: 2px; }
+.error { color: #b00020; padding: 8px; background: #fdecef; border-radius: 6px; }
+.loading { color: #888; padding: 8px; }
+.poster { width: 100%; border-radius: 8px; margin: 8px 0; }
+.info { margin: 8px 0; }
+.line { margin: 4px 0; color: #333; }
+.desc { margin-top: 10px; line-height: 1.6; color: #333; white-space: pre-wrap; }
+.actions { margin-top: 16px; display: flex; gap: 12px; }
+.btn { flex: 1; }
+.footer { margin-top: 24px; display: flex; justify-content: center; }
+.link { color: #007aff; }
+/* 扩展展示区与收藏按钮 */
+.image-box { margin-top: 10px; }
+.promo { width: 100%; border-radius: 8px; }
+.link-box { margin-top: 8px; display: flex; align-items: center; gap: 8px; }
+.hint { color: #888; font-size: 12px; }
+.fav-btn { flex: 0 0 auto; }

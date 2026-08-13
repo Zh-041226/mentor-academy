@@ -1,0 +1,48 @@
+<view class="container">
+  <view class="header">
+    <view class="title">我的报名</view>
+    <view class="sub">已报名与历史取消记录</view>
+  </view>
+
+  <view wx:if="{{error}}" class="error">{{error}}</view>
+  <view wx:if="{{loading}}" class="loading">正在加载...</view>
+
+  <view wx:if="{{!loading}}">
+    <view class="section-title">当前报名</view>
+    <view wx:if="{{registered.length === 0}}" class="empty">暂无报名</view>
+    <view wx:for="{{registered}}" wx:key="id" class="card">
+      <image wx:if="{{item.posterUrl}}" class="poster" src="{{fullUploadsUrl(item.posterUrl)}}" mode="aspectFill"></image>
+      <view class="info">
+        <view class="row">
+          <text class="name">{{item.title}}</text>
+          <text class="tag">{{item.category || '其他'}}</text>
+        </view>
+        <view class="line">时间：{{item.timeText || '待定'}}</view>
+        <view class="line">地点：{{item.place || '待定'}}</view>
+        <view class="line">状态：{{item.status === 'PENDING_CANCEL' ? '取消审核中' : '已报名'}}</view>
+        <button wx:if="{{item.status === 'REGISTERED'}}" class="btn" type="warn" data-id="{{item.id}}" bindtap="showCancelInput">取消报名</button>
+        <view wx:if="{{inputVisibleId === item.id}}" class="cancel-box">
+          <textarea class="reason" placeholder="填写5-200字取消事由" maxlength="200" value="{{reasonInputs[item.id] || ''}}" bindinput="onReasonInput" data-id="{{item.id}}"></textarea>
+          <view class="cancel-actions">
+            <button size="mini" type="default" bindtap="hideCancelInput">关闭</button>
+            <button size="mini" type="warn" data-id="{{item.id}}" loading="{{canceling}}" bindtap="submitCancel">提交取消</button>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section-title">历史记录</view>
+    <view wx:if="{{history.length === 0}}" class="empty">暂无历史取消记录</view>
+    <view wx:for="{{history}}" wx:key="id" class="card">
+      <image wx:if="{{item.posterUrl}}" class="poster" src="{{fullUploadsUrl(item.posterUrl)}}" mode="aspectFill"></image>
+      <view class="info">
+        <view class="row">
+          <text class="name">{{item.title}}</text>
+          <text class="tag">{{item.category || '其他'}}</text>
+        </view>
+        <view class="line">取消时间：{{formatDateTime(item.canceledAt)}}</view>
+        <view class="line">取消事由：{{item.reason || '无'}}</view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,18 @@
+.container { padding: 20rpx; }
+.header { margin-bottom: 16rpx; }
+.title { font-size: 36rpx; font-weight: 600; }
+.sub { color: #666; font-size: 26rpx; margin-top: 6rpx; }
+.btn-link { margin-top: 10rpx; align-self: flex-start; }
+.filters { margin-top: 10rpx; display: flex; align-items: center; gap: 10rpx; }
+.filter-label { color: #666; font-size: 24rpx; }
+.error { color: #e64340; margin-bottom: 12rpx; }
+.loading { color: #999; margin-bottom: 12rpx; }
+.card { display: flex; border: 1rpx solid #eee; border-radius: 12rpx; overflow: hidden; margin-bottom: 16rpx; }
+.poster { width: 240rpx; height: 180rpx; background: #f6f6f6; }
+.info { flex: 1; padding: 16rpx; }
+.row { display: flex; justify-content: space-between; align-items: center; }
+.name { font-size: 30rpx; font-weight: 500; }
+.tag { font-size: 24rpx; color: #1677ff; }
+.fav { font-size: 24rpx; color: #ff9f0a; margin-left: 12rpx; }
+.line { color: #444; font-size: 26rpx; margin-top: 6rpx; }
+.btn { margin-top: 10rpx; }

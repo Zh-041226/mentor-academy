@@ -1,0 +1,52 @@
+# ===== 依赖 =====
+node_modules/
+
+# ===== 环境变量 / 密钥（真实密码不进仓库） =====
+.env
+.env.local
+.env.*.local
+*.env.production
+deploy/.env.production
+
+# ===== 上传的用户内容（含个人数据/图片，不入库） =====
+backend/uploads/
+
+# ===== 构建产物 =====
+dist/
+dist-ssr/
+
+# ===== 打包产物 / 旧备份 =====
+*.tgz
+*.zip
+*.7z
+*.rar
+
+# ===== 含服务器凭据的一次性调试脚本 =====
+test-db.js
+test-ssh.js
+test-prisma.js
+test-nginx.js
+test-logs.js
+test-logs2.js
+test-pm2.js
+test-pm2-logs.js
+test-upload.js
+test-upload-backend.js
+install-sharp.js
+run-remote-thumbs.js
+
+# ===== 含数据的临时 SQL 导出 =====
+temp_activities.sql
+temp_hero_slides.sql
+
+# ===== 日志 =====
+*.log
+logs/
+npm-debug.log*
+
+# ===== IDE / 系统 =====
+.trae/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

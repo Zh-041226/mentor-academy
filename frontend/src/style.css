@@ -1,0 +1,962 @@
+:root {
+  /* 基础品牌色（保留，兼容原有样式） */
+  --brand-primary: #409eff;
+  --brand-accent: #67C23A;
+  --brand-text: #213547;
+  --bg-app: #f7f9fc;
+
+  /* Sunset（日落）主题变量：统一全站按钮、搜索框、筛选框的年轻质感 */
+  --sunset-start: #FF7D73;   /* 橙红 */
+  --sunset-end:   #FDBA74;   /* 金色 */
+  --sunset-focus-1: rgba(255,125,115,0.18);
+  --sunset-focus-2: rgba(253,186,116,0.18);
+  --sunset-shadow-1: rgba(253,186,116,0.18);
+  --sunset-shadow-2: rgba(255,125,115,0.18);
+  --sunset-glass-bg: rgba(255,255,255,0.82);
+  --sunset-glass-border: rgba(0,0,0,0.08);
+  --mobile-page-x: 12px;
+  --mobile-topbar-height: 60px;
+  --mobile-tabbar-height: 84px;
+  --mobile-surface: rgba(255,255,255,0.96);
+  --mobile-surface-soft: linear-gradient(135deg, rgba(255,247,237,0.98), rgba(255,255,255,0.98));
+  --mobile-border: rgba(255,125,115,0.12);
+  --mobile-radius-lg: 24px;
+  --mobile-radius-md: 20px;
+  --mobile-shadow: 0 16px 34px rgba(15, 23, 42, 0.06);
+  --mobile-shadow-soft: 0 10px 24px rgba(15, 23, 42, 0.05);
+  --mobile-text-main: #0f172a;
+  --mobile-text-sub: #64748b;
+
+  /* 高级质感按钮的四套配色（蓝/绿/橙/红），用于不同语义的变体 */
+  --btn-blue-start: #3B82F6;   /* Blue 500 */
+  --btn-blue-end:   #60A5FA;   /* Blue 400 */
+  --btn-blue-border: rgba(59,130,246,0.45);
+  --btn-blue-shadow1: rgba(59,130,246,0.20);
+  --btn-blue-shadow2: rgba(96,165,250,0.18);
+
+  --btn-green-start: #10B981;  /* Emerald 500 */
+  --btn-green-end:   #34D399;  /* Emerald 400 */
+  --btn-green-border: rgba(16,185,129,0.45);
+  --btn-green-shadow1: rgba(16,185,129,0.20);
+  --btn-green-shadow2: rgba(52,211,153,0.18);
+
+  --btn-orange-start: #F59E0B; /* Amber 500 */
+  --btn-orange-end:   #FDBA74; /* Sunset amber */
+  --btn-orange-border: rgba(245,158,11,0.45);
+  --btn-orange-shadow1: rgba(245,158,11,0.20);
+  --btn-orange-shadow2: rgba(253,186,116,0.18);
+  /* 更淡的黄色（用于“看着淡一点”的需求） */
+  --btn-orange-soft: #FBD49B; /* Soft Amber */
+  --btn-orange-soft-border: rgba(245,158,11,0.30);
+
+  --btn-red-start: #EF4444;    /* Red 500 */
+  --btn-red-end:   #F87171;    /* Red 400 */
+  --btn-red-border: rgba(239,68,68,0.45);
+  --btn-red-shadow1: rgba(239,68,68,0.20);
+  --btn-red-shadow2: rgba(248,113,113,0.18);
+
+  font-family: 'Microsoft YaHei', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  color-scheme: light;
+  color: var(--brand-text);
+  background-color: var(--bg-app);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body { margin: 0; min-width: 320px; min-height: 100vh; background: var(--bg-app); }
+
+/* 全局覆盖：保证错误提示等 ElMessage 会出现在屏幕正中间 */
+.el-message {
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin-top: 0 !important;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.card {
+  padding: 2em;
+}
+
+#app { max-width: 1280px; margin: 0 auto; padding: 16px; padding-top: 72px; }
+
+/* 移动端优化：缩小内边距，保证内容填满 */
+@media (max-width: 768px) {
+  #app {
+    padding: 12px var(--mobile-page-x);
+    padding-top: calc(var(--mobile-topbar-height) + env(safe-area-inset-top, 0px) + 6px);
+  }
+  body {
+    background:
+      radial-gradient(circle at top, rgba(255, 247, 237, 0.9), transparent 40%),
+      var(--bg-app);
+  }
+}
+
+/* 当固定底部条（FooterBar）浮现时，为页面内容预留空间，避免被遮挡 */
+.footer-visible #app { padding-bottom: 64px; }
+
+/* 统一 Sunset 年轻质感：Element Plus 全局覆盖（按钮 / 输入框 / 筛选框） */
+/* 按钮：主按钮渐变、次按钮玻璃胶囊 */
+.el-button { border-radius: 999px; transition: all .2s ease; }
+.el-button--primary {
+  background-image: linear-gradient(135deg, var(--sunset-start), var(--sunset-end));
+  color: #fff;
+  border: none;
+  box-shadow: 0 6px 16px var(--sunset-shadow-1), 0 2px 6px var(--sunset-shadow-2);
+}
+.el-button--primary:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+  box-shadow: 0 10px 24px var(--sunset-shadow-1), 0 4px 12px var(--sunset-shadow-2);
+}
+.el-button--primary:active {
+  transform: translateY(0);
+  filter: brightness(0.98);
+}
+/* 朴素按钮（plain）使用玻璃胶囊风格，适合筛选条的次要操作 */
+.el-button.is-plain {
+  background: var(--sunset-glass-bg);
+  border: 1px solid var(--sunset-glass-border);
+  color: #374151;
+  backdrop-filter: blur(6px);
+}
+.el-button.is-plain:hover { border-color: rgba(255,125,115,0.42); color: #1f2937; }
+
+/* 更高级的四色变体：在主题作用域内为 primary/success/warning/danger 分别提供渐变与玻璃胶囊风格 */
+.theme-sunset .admin-layout .el-button--primary:not(.is-plain) {
+  background-image: linear-gradient(135deg, var(--btn-blue-start), var(--btn-blue-end));
+  box-shadow: none;
+}
+.theme-sunset .admin-layout .el-button--primary:not(.is-plain):hover { filter: brightness(1.03); }
+.theme-sunset .admin-layout .el-button--primary.is-plain {
+  color: var(--btn-blue-start);
+  border-color: var(--btn-blue-border);
+}
+.theme-sunset .admin-layout .el-button--primary.is-plain:hover {
+  border-color: rgba(59,130,246,0.62);
+  box-shadow: none;
+}
+
+.theme-sunset .admin-layout .el-button--success:not(.is-plain) {
+  background-image: linear-gradient(135deg, var(--btn-green-start), var(--btn-green-end));
+  box-shadow: none;
+}
+.theme-sunset .admin-layout .el-button--success:not(.is-plain):hover { filter: brightness(1.03); }
+.theme-sunset .admin-layout .el-button--success.is-plain {
+  color: var(--btn-green-start);
+  border-color: var(--btn-green-border);
+}
+.theme-sunset .admin-layout .el-button--success.is-plain:hover {
+  border-color: rgba(16,185,129,0.62);
+  box-shadow: none;
+}
+
+.theme-sunset .admin-layout .el-button--warning:not(.is-plain) {
+  background-image: linear-gradient(135deg, var(--btn-orange-start), var(--btn-orange-end));
+  box-shadow: none;
+}
+.theme-sunset .admin-layout .el-button--warning:not(.is-plain):hover { filter: brightness(1.03); }
+.theme-sunset .admin-layout .el-button--warning.is-plain {
+  color: var(--btn-orange-start);
+  border-color: var(--btn-orange-border);
+}
+.theme-sunset .admin-layout .el-button--warning.is-plain:hover {
+  border-color: rgba(245,158,11,0.62);
+  box-shadow: none;
+}
+
+.theme-sunset .admin-layout .el-button--danger:not(.is-plain) {
+  background-image: linear-gradient(135deg, var(--btn-red-start), var(--btn-red-end));
+  box-shadow: none;
+}
+.theme-sunset .admin-layout .el-button--danger:not(.is-plain):hover { filter: brightness(1.03); }
+.theme-sunset .admin-layout .el-button--danger.is-plain {
+  color: var(--btn-red-start);
+  border-color: var(--btn-red-border);
+}
+.theme-sunset .admin-layout .el-button--danger.is-plain:hover {
+  border-color: rgba(239,68,68,0.62);
+  box-shadow: none;
+}
+
+/* 重新分配 Datetime Picker 顶部日期与时间输入框的宽度比例，压缩日期框，给时间下拉面板留出充足空间 */
+.el-date-picker__time-header {
+  display: flex !important;
+  align-items: center !important;
+}
+.el-date-picker__time-header .el-date-picker__editor-wrap:nth-child(1) {
+  flex: 4 !important; /* 日期框占 40% */
+  margin-right: 8px !important;
+}
+.el-date-picker__time-header .el-date-picker__editor-wrap:nth-child(2) {
+  flex: 6 !important; /* 时间框占 60% */
+}
+
+/* 时间面板稍微放宽，防止内容被截断 */
+.el-time-panel {
+  width: 190px !important;
+}
+.el-time-spinner__wrapper {
+  width: 33.3% !important;
+}
+.el-time-panel__footer {
+  display: flex !important;
+  justify-content: flex-end !important;
+  padding: 4px !important;
+  gap: 8px !important;
+}
+.el-time-panel__btn {
+  margin: 0 !important;
+  padding: 0 10px !important;
+}
+
+/* 统一禁用态：降低饱和度、移除阴影、保持文字可读 */
+.theme-sunset .admin-layout .el-button.is-disabled { opacity: 0.7; filter: saturate(0.85) contrast(0.98); box-shadow: none; }
+.theme-sunset .admin-layout .el-button.is-disabled.is-plain { background: rgba(255,255,255,0.72); border-color: rgba(0,0,0,0.08); }
+
+/* 输入框/筛选框：圆角 + 玻璃背景 + 焦点光晕 */
+.el-input__wrapper,
+.el-select__wrapper {
+  background: rgba(255,255,255,0.9);
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
+  transition: all .2s ease;
+}
+
+/* 图片加载渐变骨架屏占位动画 */
+.image-skeleton {
+  width: 100%;
+  height: 100%;
+  min-height: 120px;
+  aspect-ratio: 16 / 9; /* 瀑布流防塌陷的固定比例占位 */
+  background: linear-gradient(135deg, rgba(255, 125, 115, 0.05), rgba(253, 186, 116, 0.1));
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+.image-skeleton::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* 两套款式：年轻化（young）与高级感（premium），针对黄/绿（warning/success），无阴影版本 */
+/* Young：纯色填充、轻边框、圆角更紧凑、hover 轻微增亮 */
+.theme-sunset .admin-layout .el-button--warning.btn-young:not(.is-plain) {
+  background-color: var(--btn-orange-soft);
+  border: 1px solid var(--btn-orange-soft-border);
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: none !important;
+}
+.theme-sunset .admin-layout .el-button--warning.btn-young:not(.is-plain):hover {
+  filter: brightness(1.02);
+}
+.theme-sunset .admin-layout .el-button--warning.btn-young.is-plain {
+  background-color: rgba(245,158,11,0.08);
+  border: 1px solid var(--btn-orange-soft-border);
+  color: var(--btn-orange-end);
+  border-radius: 10px;
+  box-shadow: none !important;
+}
+.theme-sunset .admin-layout .el-button--warning.btn-young.is-plain:hover {
+  filter: brightness(1.02);
+}
+
+.theme-sunset .admin-layout .el-button--success.btn-young:not(.is-plain) {
+  background-color: var(--btn-green-start);
+  border: 1px solid var(--btn-green-border);
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: none !important;
+}
+.theme-sunset .admin-layout .el-button--success.btn-young:not(.is-plain):hover { filter: brightness(1.04); }
+.theme-sunset .admin-layout .el-button--success.btn-young.is-plain {
+  background-color: rgba(16,185,129,0.12);
+  border: 1px solid var(--btn-green-border);
+  color: var(--btn-green-start);
+  border-radius: 10px;
+  box-shadow: none !important;
+}
+.theme-sunset .admin-layout .el-button--success.btn-young.is-plain:hover { filter: brightness(1.04); }
+
+/* Premium：高质感扁平款（去渐变、无阴影、边框更精致），圆角更柔和 */
+.theme-sunset .admin-layout .el-button--warning.btn-premium:not(.is-plain) {
+  background-color: var(--btn-orange-soft);
+  border: 1px solid var(--btn-orange-soft-border);
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: none !important;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.theme-sunset .admin-layout .el-button--warning.btn-premium:not(.is-plain):hover { filter: brightness(1.02); }
+.theme-sunset .admin-layout .el-button--warning.btn-premium.is-plain {
+  background-color: rgba(245,158,11,0.08);
+  border: 1px solid var(--btn-orange-soft-border);
+  color: var(--btn-orange-end);
+  border-radius: 12px;
+  box-shadow: none !important;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.theme-sunset .admin-layout .el-button--warning.btn-premium.is-plain:hover { filter: brightness(1.02); }
+
+.theme-sunset .admin-layout .el-button--success.btn-premium:not(.is-plain) {
+  background-color: var(--btn-green-end);
+  border: 1px solid var(--btn-green-border);
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: none !important;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.theme-sunset .admin-layout .el-button--success.btn-premium:not(.is-plain):hover { filter: brightness(1.04); }
+.theme-sunset .admin-layout .el-button--success.btn-premium.is-plain {
+  background-color: rgba(16,185,129,0.10);
+  border: 1px solid var(--btn-green-border);
+  color: var(--btn-green-start);
+  border-radius: 12px;
+  box-shadow: none !important;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.theme-sunset .admin-layout .el-button--success.btn-premium.is-plain:hover { filter: brightness(1.03); }
+.el-input__wrapper.is-focus,
+.el-select__wrapper.is-focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 2px var(--sunset-focus-1), 0 8px 22px var(--sunset-focus-2);
+}
+.el-input__prefix { color: var(--sunset-start); }
+
+/* 卡片：统一为“活动广场”同款暖色双层阴影，hover 时略微加深；并统一圆角 */
+.el-card { box-shadow: 0 8px 24px rgba(253,186,116,0.14), 0 2px 8px rgba(255,125,115,0.12); border-radius: 16px; overflow: hidden; }
+.theme-sunset .el-card { border-radius: 16px !important; overflow: hidden; }
+.el-card:hover { box-shadow: 0 10px 28px rgba(253,186,116,0.18), 0 4px 12px rgba(255,125,115,0.16); }
+
+/* 选择框/筛选框的下拉面板统一圆角（Select / DatePicker / Autocomplete / Dropdown） */
+.el-select-dropdown,
+.el-autocomplete-suggestion,
+.el-dropdown-menu {
+  border-radius: 12px;
+  border: 1px solid var(--sunset-glass-border);
+  overflow: hidden;
+  box-shadow: 0 10px 28px rgba(253,186,116,0.12), 0 2px 8px rgba(255,125,115,0.12);
+}
+.el-picker-panel {
+  border-radius: 12px;
+  border: 1px solid var(--sunset-glass-border);
+  overflow: hidden;
+  box-shadow: 0 10px 28px rgba(253,186,116,0.12), 0 2px 8px rgba(255,125,115,0.12);
+}
+
+/* 在主题容器内覆盖 Element Plus 主色为 Sunset（日落） */
+.theme-sunset {
+  --el-color-primary: var(--sunset-start);
+  --el-color-primary-dark-2: #e8645b;
+  --el-color-primary-light-3: #ffa38f;
+  --el-color-primary-light-5: #ffb79e;
+  --el-color-primary-light-7: #ffd1c0;
+  --el-color-primary-light-9: #fff0eb;
+  /* 统一卡片圆角变量，确保 Element Plus 使用 var 的地方也能应用 16px 圆角 */
+  --el-card-border-radius: 16px;
+}
+/* 下拉列表的选中项与悬浮态颜色同步为 Sunset 主色系 */
+.theme-sunset .el-select__caret { color: var(--el-color-primary); }
+.theme-sunset .el-select-dropdown__item.is-selected { color: var(--el-color-primary); font-weight: 700; }
+.theme-sunset .el-select-dropdown__item.hover, 
+.theme-sunset .el-select-dropdown__item:hover { background-color: var(--el-color-primary-light-9); }
+
+/* 对话框与抽屉：统一暖色双层阴影与圆角，保持轻盈通透的层次感 */
+.theme-sunset .el-dialog {
+  border-radius: 16px;
+  border: 1px solid var(--sunset-glass-border);
+  box-shadow: 0 10px 28px rgba(253,186,116,0.18), 0 4px 12px rgba(255,125,115,0.16);
+  background: rgba(255,255,255,0.98);
+}
+.theme-sunset .el-dialog__header { border-bottom: 1px solid rgba(0,0,0,0.06); }
+.theme-sunset .el-dialog__footer { border-top: 1px solid rgba(0,0,0,0.06); }
+
+.theme-sunset .el-drawer {
+  border-left: 1px solid var(--sunset-glass-border);
+  border-right: 1px solid var(--sunset-glass-border);
+  box-shadow: 0 10px 24px rgba(253,186,116,0.18), 0 4px 12px rgba(255,125,115,0.16);
+  background: rgba(255,255,255,0.98);
+}
+.theme-sunset .el-drawer__header { border-bottom: 1px solid rgba(0,0,0,0.06); }
+
+/* 蒙层（Overlay）：轻暖色遮罩与微模糊，提升层次但不打扰阅读 */
+.theme-sunset .el-overlay {
+  background-color: rgba(253,186,116,0.10);
+  backdrop-filter: blur(1.5px) saturate(1.02);
+}
+
+/* 图片预览：单独生成全屏蒙板，并把预览图稳定放在最上层 */
+.theme-sunset .el-image-viewer__wrapper {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 4000 !important;
+  background: transparent !important;
+}
+
+.theme-sunset .el-image-viewer__mask {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  background: rgba(15, 23, 42, 0.78) !important;
+  backdrop-filter: none !important;
+}
+
+.theme-sunset .el-image-viewer__canvas {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+}
+
+.theme-sunset .el-image-viewer__img {
+  position: relative;
+  z-index: 2;
+  border-radius: 10px;
+  box-shadow: 0 16px 48px rgba(15, 23, 42, 0.28);
+  background: #fff;
+}
+
+.theme-sunset .el-image-viewer__btn,
+.theme-sunset .el-image-viewer__actions {
+  z-index: 3;
+}
+
+/* Tabs：标签页更有质感，激活项渐变文字与激活条暖色渐变 */
+.theme-sunset .el-tabs__item {
+  font-weight: 600;
+  color: #374151;
+  letter-spacing: 0.2px;
+  transition: color .18s ease, transform .18s ease, background-color .18s ease, border-color .18s ease;
+  border-radius: 999px;
+  padding: 6px 14px;
+  margin-right: 8px;
+}
+.theme-sunset .el-tabs__item:hover { color: #1f2937; }
+.theme-sunset .el-tabs__item.is-active {
+  font-weight: 800;
+  background-image: linear-gradient(135deg, var(--sunset-start), var(--sunset-end));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 10px rgba(253,186,116,0.26);
+  /* 去掉激活项的胶囊背景与描边，只保留渐变文字效果 */
+}
+.theme-sunset .el-tabs__active-bar {
+  height: 3px;
+  border-radius: 999px;
+  background-image: linear-gradient(90deg, var(--sunset-start), var(--sunset-end));
+  box-shadow: 0 4px 10px rgba(253,186,116,0.22);
+}
+
+/* Radio Button：将 el-radio-button 改为 Sunset 胶囊样式，激活态为渐变 */
+.theme-sunset .el-radio-button__inner {
+  border-radius: 999px !important;
+  border: 1px solid var(--sunset-glass-border) !important;
+  background: rgba(255,255,255,0.92) !important;
+  color: #374151 !important;
+  transition: all .18s ease;
+}
+.theme-sunset .el-radio-button__inner:hover {
+  background-color: rgba(255,255,255,0.98) !important;
+}
+.theme-sunset .el-radio-button__original-radio:checked + .el-radio-button__inner,
+.theme-sunset .el-radio-button.is-active .el-radio-button__inner {
+  background-image: linear-gradient(135deg, var(--sunset-start), var(--sunset-end)) !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0 6px 16px var(--sunset-shadow-1), 0 2px 6px var(--sunset-shadow-2) !important;
+}
+
+/* Menu：侧边菜单项（li）采用 Sunset 激活与悬浮配色 */
+.theme-sunset .el-menu { background: #fff; border-right: none; }
+.theme-sunset .el-menu-item {
+  border-radius: 10px;
+  margin: 2px 8px;
+  color: #374151;
+  transition: all .18s ease;
+}
+.theme-sunset .el-menu-item:hover {
+  background-color: var(--el-color-primary-light-9);
+  color: #1f2937;
+}
+.theme-sunset .el-menu-item.is-active {
+  color: #fff;
+  background-image: linear-gradient(135deg, var(--sunset-start), var(--sunset-end));
+  box-shadow: 0 6px 16px var(--sunset-shadow-1), 0 2px 6px var(--sunset-shadow-2);
+}
+
+/* 表格与图片等：统一圆角 */
+.theme-sunset .el-table { border-radius: 12px; overflow: hidden; }
+.theme-sunset .el-image { border-radius: 12px; overflow: hidden; }
+
+/* 全局标题（卡片头内的标题文本/品牌）统一为 Sunset 渐变质感与更大字号 */
+.theme-sunset .card-header > span,
+.theme-sunset .brand,
+.theme-sunset .headline-sunset {
+  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: 0.3px;
+  background-image: linear-gradient(135deg, var(--sunset-start), var(--sunset-end));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 12px rgba(253,186,116,0.24);
+  display: inline-block;
+}
+.theme-sunset .card-header > span::after,
+.theme-sunset .brand::after,
+.theme-sunset .headline-sunset::after {
+  content: '';
+  display: block;
+  margin-top: 6px;
+  width: 48px;
+  height: 3px;
+  border-radius: 999px;
+  background-image: linear-gradient(90deg, var(--sunset-start), var(--sunset-end));
+  box-shadow: 0 4px 10px rgba(253,186,116,0.22);
+}
+
+/* Admin Workspace：SaaS 风格统一工作区骨架 */
+.admin-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.admin-page-head {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.admin-page-head__main,
+.admin-page-head__side {
+  border-radius: 22px;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  background: rgba(255,255,255,0.88);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.05);
+}
+
+.admin-page-head__main {
+  flex: 1;
+  padding: 24px 26px;
+}
+
+.admin-page-head__eyebrow {
+  color: #94a3b8;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.admin-page-head__title {
+  margin: 10px 0 8px;
+  font-size: 28px;
+  line-height: 1.15;
+  color: #0f172a;
+  font-weight: 800;
+}
+
+.admin-page-head__desc {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.admin-page-head__side {
+  min-width: 260px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.admin-page-head__meta-label {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.admin-page-head__meta-value {
+  margin-top: 6px;
+  font-size: 30px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.admin-page-head__meta-note {
+  margin-top: 6px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.admin-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.admin-metric {
+  padding: 18px 20px;
+  min-height: 116px;
+  border-radius: 20px;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  background: rgba(255,255,255,0.88);
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.05);
+}
+
+.admin-metric__label {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.admin-metric__value {
+  margin-top: 10px;
+  color: #0f172a;
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.admin-metric__hint {
+  margin-top: 8px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.admin-toolbar-panel,
+.admin-workspace-card {
+  border-radius: 22px;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.05);
+}
+
+.admin-toolbar-panel {
+  padding: 16px 18px;
+}
+
+.admin-page .el-button:not(.el-button--small) {
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.admin-page .el-button.is-plain {
+  background: rgba(255, 255, 255, 0.96);
+  border-width: 1px;
+  border-style: solid;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+}
+
+.admin-page .el-button.is-plain:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+}
+
+.admin-page .el-button--primary.is-plain {
+  color: #2563eb;
+  border-color: rgba(37, 99, 235, 0.18);
+  background: linear-gradient(135deg, rgba(59,130,246,0.10), rgba(96,165,250,0.16));
+}
+
+.admin-page .el-button--warning.is-plain {
+  color: #d97706;
+  border-color: rgba(245, 158, 11, 0.18);
+  background: linear-gradient(135deg, rgba(245,158,11,0.10), rgba(253,186,116,0.18));
+}
+
+.admin-page .el-button--success.is-plain {
+  color: #059669;
+  border-color: rgba(16, 185, 129, 0.18);
+  background: linear-gradient(135deg, rgba(16,185,129,0.10), rgba(52,211,153,0.18));
+}
+
+.admin-page .el-button--danger.is-plain {
+  color: #dc2626;
+  border-color: rgba(239, 68, 68, 0.18);
+  background: linear-gradient(135deg, rgba(239,68,68,0.10), rgba(248,113,113,0.16));
+}
+
+.admin-page .el-button--primary.btn-view:not(.is-plain) {
+  color: #fff;
+  border: 1px solid rgba(59, 130, 246, 0.28);
+  background: linear-gradient(135deg, #4f8df7, #7fb2ff);
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.16);
+}
+
+.admin-page .el-button--primary.btn-view:not(.is-plain):hover {
+  filter: brightness(1.03);
+  box-shadow: 0 14px 24px rgba(59, 130, 246, 0.2);
+}
+
+.admin-toolbar-panel__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.admin-toolbar-panel__group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.admin-toolbar-panel__label {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.admin-page .el-input__wrapper,
+.admin-page .el-select__wrapper,
+.admin-page .el-date-editor.el-input__wrapper,
+.admin-page .el-date-editor .el-input__wrapper,
+.admin-page .el-range-editor.el-input__wrapper {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.admin-page .el-input__inner,
+.admin-page .el-select__selected-item,
+.admin-page .el-range-input,
+.admin-page .el-range-separator {
+  font-size: 13px;
+}
+
+.admin-workspace-card .el-card__header {
+  padding: 20px 22px 14px;
+}
+
+.admin-workspace-card .el-card__body {
+  padding: 0 22px 18px;
+}
+
+.admin-table-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.admin-table-title__main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-table-title__label {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.admin-table-title__desc {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.admin-table-shell {
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(15, 23, 42, 0.05);
+}
+
+.admin-page .table-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 14px;
+}
+
+.admin-table-shell .el-table th.el-table__cell,
+.admin-table-shell .el-table td.el-table__cell {
+  padding: 10px 0;
+}
+
+.admin-table-shell .el-table .cell {
+  min-height: 22px;
+  line-height: 22px;
+  font-size: 13px;
+}
+
+.admin-table-shell .el-table th.el-table__cell > .cell {
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.admin-table-shell .el-table td.el-table__cell {
+  vertical-align: middle;
+}
+
+.admin-table-shell .el-button--small {
+  min-width: 54px;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.admin-page .el-pagination {
+  font-size: 13px;
+  gap: 6px;
+}
+
+.admin-page .el-pagination .btn-prev,
+.admin-page .el-pagination .btn-next,
+.admin-page .el-pagination .el-pager li {
+  min-width: 32px;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 10px;
+}
+
+.admin-page .el-pagination .el-select .el-select__wrapper,
+.admin-page .el-pagination .el-input__wrapper {
+  min-height: 32px;
+  padding: 0 10px;
+}
+
+@media (max-width: 1200px) {
+  .admin-page-head {
+    flex-direction: column;
+  }
+
+  .admin-page-head__side {
+    min-width: auto;
+  }
+
+  .admin-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-metrics {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 修复：防止标题的透明文字样式影响到按钮等控件的文字显示 */
+.theme-sunset .el-button,
+.theme-sunset .el-button *,
+.theme-sunset button,
+.theme-sunset button *,
+.theme-sunset .el-link,
+.theme-sunset .el-link *,
+.theme-sunset .el-tag,
+.theme-sunset .el-tag * {
+  -webkit-text-fill-color: currentColor !important;
+}
+
+/* 输入框/选择框占位提示（placeholder）在 Sunset 主题下明确可见 */
+.theme-sunset .el-input__wrapper input::placeholder,
+.theme-sunset input.el-input__inner::placeholder,
+.theme-sunset .el-range-input::placeholder {
+  color: var(--el-text-color-placeholder, #A8ABB2) !important;
+  -webkit-text-fill-color: var(--el-text-color-placeholder, #A8ABB2) !important;
+  opacity: 1 !important;
+}
+.theme-sunset .el-select__placeholder {
+  color: var(--el-text-color-placeholder, #A8ABB2) !important;
+  -webkit-text-fill-color: var(--el-text-color-placeholder, #A8ABB2) !important;
+  opacity: 1 !important;
+}
+.theme-sunset .el-button--primary.btn-sunset:not(.is-plain) {
+  background-image: linear-gradient(135deg, var(--sunset-start), var(--sunset-end)) !important;
+  box-shadow: none !important;
+}
+.theme-sunset .el-button--primary.btn-sunset:not(.is-plain):hover {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+  box-shadow: none !important;
+}
+.theme-sunset .el-button--primary.btn-sunset.is-plain {
+  background: var(--sunset-glass-bg) !important;
+  border: 1px solid var(--sunset-glass-border) !important;
+  color: var(--sunset-start) !important;
+}
+.theme-sunset .el-button--primary.btn-sunset.is-plain:hover {
+  border-color: rgba(255,125,115,0.42) !important;
+}
+
+/* 让非元素按钮（例如 <span class="btn-sunset">）也能获得同款 Sunset 胶囊风格 */
+.theme-sunset span.btn-sunset,
+.theme-sunset a.btn-sunset {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--sunset-glass-border);
+  background: var(--sunset-glass-bg);
+  color: var(--sunset-start);
+  cursor: pointer;
+  user-select: none;
+  transition: all .18s ease;
+}
+.theme-sunset span.btn-sunset:hover,
+.theme-sunset a.btn-sunset:hover {
+  border-color: rgba(255,125,115,0.42);
+  color: #fff;
+  background-image: linear-gradient(135deg, var(--sunset-start), var(--sunset-end));
+}
+.theme-sunset span.btn-sunset:active,
+.theme-sunset a.btn-sunset:active {
+  filter: brightness(0.98);
+}

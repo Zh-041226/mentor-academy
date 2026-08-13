@@ -1,0 +1,5 @@
+<view class="container">
+  <view class="title">导师进书院</view>
+  <button class="btn" bindtap="doLogin" loading="{{loading}}">一键登录</button>
+  <text class="error">{{error}}</text>
+</view>

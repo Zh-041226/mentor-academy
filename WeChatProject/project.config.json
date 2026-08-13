@@ -1,0 +1,13 @@
+{
+  "miniprogramRoot": "./",
+  "appid": "YOUR_APPID_HERE",
+  "projectname": "导师进书院-WeChat",
+  "compileType": "miniprogram",
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": true,
+    "coverView": true,
+    "minified": true
+  }
+}

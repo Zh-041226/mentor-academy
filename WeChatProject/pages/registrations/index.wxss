@@ -1,0 +1,19 @@
+.container { padding: 20rpx; }
+.header { margin-bottom: 16rpx; }
+.title { font-size: 36rpx; font-weight: 600; }
+.sub { color: #666; font-size: 26rpx; margin-top: 6rpx; }
+.error { color: #e64340; margin-bottom: 12rpx; }
+.loading { color: #999; margin-bottom: 12rpx; }
+.section-title { font-size: 30rpx; font-weight: 500; margin: 16rpx 0 8rpx; }
+.empty { color: #999; margin: 10rpx 0; }
+.card { display: flex; border: 1rpx solid #eee; border-radius: 12rpx; overflow: hidden; margin-bottom: 16rpx; }
+.poster { width: 240rpx; height: 180rpx; background: #f6f6f6; }
+.info { flex: 1; padding: 16rpx; }
+.row { display: flex; justify-content: space-between; align-items: center; }
+.name { font-size: 30rpx; font-weight: 500; }
+.tag { font-size: 24rpx; color: #1677ff; }
+.line { color: #444; font-size: 26rpx; margin-top: 6rpx; }
+.btn { margin-top: 10rpx; }
+.cancel-box { margin-top: 10rpx; background: #f7f7f7; padding: 12rpx; border-radius: 8rpx; }
+.reason { min-height: 100rpx; background: #fff; border: 1rpx solid #ddd; border-radius: 6rpx; padding: 8rpx; }
+.cancel-actions { display: flex; justify-content: flex-end; gap: 12rpx; margin-top: 8rpx; }

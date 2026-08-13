@@ -1,0 +1,18 @@
+{
+  "pages": [
+    "pages/activities/detail",
+    "pages/activities/index",
+    "pages/favorites/index",
+    "pages/registrations/index",
+    "pages/index/index",
+    "pages/webview/webview",
+    "pages/bind/bind"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "导师进书院",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,16 @@
+.container { padding: 20rpx; }
+.header { margin-bottom: 16rpx; }
+.title { font-size: 36rpx; font-weight: 600; }
+.sub { color: #666; font-size: 26rpx; margin-top: 6rpx; }
+.error { color: #e64340; margin-bottom: 12rpx; }
+.loading { color: #999; margin-bottom: 12rpx; }
+.empty { color: #666; background: #f7f7f7; padding: 24rpx; border-radius: 12rpx; text-align: center; }
+.card { display: flex; border: 1rpx solid #eee; border-radius: 12rpx; overflow: hidden; margin-bottom: 16rpx; }
+.info { flex: 1; padding: 16rpx; }
+.row { display: flex; justify-content: space-between; align-items: center; }
+.name { font-size: 30rpx; font-weight: 500; }
+.tag { font-size: 24rpx; color: #1677ff; }
+.line { color: #444; font-size: 26rpx; margin-top: 6rpx; }
+.ops { display: flex; gap: 12rpx; margin-top: 12rpx; }
+.btn { flex: 1; }
+.btn.danger { background: #ff4d4f; color: #fff; border: none; }

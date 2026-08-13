@@ -1,0 +1,42 @@
+<view class="container">
+  <view class="header">
+    <view class="title">{{item?.title || '活动详情'}}</view>
+    <view class="sub">{{item?.category || ''}} {{item?.mentorName || ''}}</view>
+  </view>
+
+  <view wx:if="{{error}}" class="error">{{error}}</view>
+  <view wx:if="{{loading}}" class="loading">正在加载...</view>
+
+  <view wx:if="{{!loading && !error && item}}" class="content">
+    <image wx:if="{{item.posterUrl}}" class="poster" src="{{fullUploadsUrl(item.posterUrl)}}" mode="widthFix"></image>
+    <view class="info">
+      <view class="line">时间：{{formatDateTime(item.startAt) || item.timeText || '待定'}}</view>
+      <view class="line">地点：{{item.place || '待定'}}</view>
+      <view class="line">名额：{{item.limit > 0 ? item.limit : '不限'}}</view>
+    </view>
+    <rich-text class="desc" nodes="{{descHtml}}"></rich-text>
+    <view wx:if="{{item.promoImageUrl}}" class="image-box">
+      <image class="promo" src="{{fullUploadsUrl(item.promoImageUrl)}}" mode="widthFix"></image>
+    </view>
+    <view wx:if="{{item.qqGroupQrUrl}}" class="image-box">
+      <view class="hint">QQ群二维码</view>
+      <image class="promo" src="{{fullUploadsUrl(item.qqGroupQrUrl)}}" mode="widthFix"></image>
+    </view>
+    <view wx:if="{{item.promoLinkUrl}}" class="link-box">
+      <view class="hint">推广链接：{{item.promoLinkUrl}}</view>
+      <button size="mini" type="default" bindtap="copyPromoLink">复制链接</button>
+    </view>
+
+    <view class="actions">
+      <button wx:if="{{!regStatus && canRegister()}}" class="btn" type="primary" loading="{{registering}}" bindtap="handleRegister">报名参加</button>
+      <button wx:elif="{{regStatus === 'REGISTERED'}}" class="btn" type="default" disabled="true">已报名</button>
+      <button wx:elif="{{regStatus === 'PENDING_CANCEL'}}" class="btn" type="default" disabled="true">取消审核中</button>
+      <button wx:else class="btn" type="default" disabled="true">报名关闭</button>
+      <button class="fav-btn" type="default" loading="{{favoriting}}" bindtap="toggleFavorite">{{favorited ? '取消收藏' : '收藏活动'}}</button>
+    </view>
+  </view>
+
+  <view class="footer">
+    <button class="link" type="default" bindtap="goBack">返回</button>
+  </view>
+</view>

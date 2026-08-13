@@ -1,0 +1,29 @@
+<view class="container">
+  <view class="header">
+    <view class="title">我的收藏</view>
+    <view class="sub">已收藏的活动列表</view>
+  </view>
+
+  <view wx:if="{{error}}" class="error">{{error}}</view>
+  <view wx:if="{{loading}}" class="loading">正在加载...</view>
+
+  <view wx:if="{{!loading && !error && items.length === 0}}" class="empty">
+    暂无收藏，去活动广场看看吧～
+  </view>
+
+  <view wx:for="{{items}}" wx:key="id" class="card">
+    <view class="info">
+      <view class="row">
+        <text class="name">{{item.title}}</text>
+        <text class="tag">{{item.category || '其他'}}</text>
+      </view>
+      <view class="line">导师：{{item.mentorName || '暂无'}}</view>
+      <view class="line">时间：{{item.timeText || '待定'}}</view>
+      <view class="line">地点：{{item.place || '待定'}}</view>
+      <view class="ops">
+        <button class="btn" type="primary" data-id="{{item.id}}" bindtap="openDetail">查看详情</button>
+        <button class="btn danger" type="warn" data-id="{{item.id}}" loading="{{unfavoritingId===item.id}}" bindtap="unfavorite">取消收藏</button>
+      </view>
+    </view>
+  </view>
+</view>

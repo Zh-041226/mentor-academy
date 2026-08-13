@@ -1,0 +1,30 @@
+<view class="container">
+  <view class="header">
+    <view class="title">活动广场</view>
+    <view class="sub">登录成功，已为你加载近期活动</view>
+    <button class="btn-link" type="default" size="mini" bindtap="goMyRegistrations">我的报名</button>
+    <button class="btn-link" type="default" size="mini" bindtap="goMyFavorites">我的收藏</button>
+    <view class="filters">
+      <switch checked="{{showFavOnly}}" bindchange="toggleFavOnly"></switch>
+      <text class="filter-label">只看收藏</text>
+    </view>
+  </view>
+
+  <view wx:if="{{error}}" class="error">{{error}}</view>
+  <view wx:if="{{loading}}" class="loading">正在加载...</view>
+
+  <view wx:for="{{items}}" wx:key="id" class="card">
+    <image wx:if="{{item.posterUrl}}" class="poster" src="{{fullUploadsUrl(item.posterUrl)}}" mode="aspectFill"></image>
+    <view class="info">
+      <view class="row">
+        <text class="name">{{item.title}}</text>
+        <text class="tag">{{item.category || '其他'}}</text>
+        <text class="fav" data-id="{{item.id}}" bindtap="toggleFavorite">{{item.favorited ? '★ 已收藏' : '☆ 收藏'}}</text>
+      </view>
+      <view class="line">开始时间：{{formatDateTime(item.startAt) || item.timeText || '待定'}}</view>
+      <view class="line">活动地点：{{item.place || '待定'}}</view>
+      <view class="line">报名：{{item.registeredCount || 0}} / {{item.limit > 0 ? item.limit : '不限'}} </view>
+      <button class="btn" type="primary" data-id="{{item.id}}" bindtap="openDetail">查看详情</button>
+    </view>
+  </view>
+</view>

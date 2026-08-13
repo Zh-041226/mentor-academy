@@ -1,0 +1,178 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Activity {
+  id                   Int                    @id @default(autoincrement())
+  title                String
+  mentorName           String                 @default("")
+  timeText             String                 @default("")
+  place                String                 @default("")
+  limit                Int                    @default(0)
+  description          String                 @db.Text
+  status               activity_status        @default(PUBLISHED)
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime
+  category             String                 @default("")
+  mentorId             Int?
+  posterSizeBytes      Int?
+  posterUrl            String?                @default("")
+  qqGroupQrSizeBytes   Int?
+  promoLinkUrl         String?                @default("")
+  promoImageUrl        String?                @default("")
+  promoImageSizeBytes  Int?
+  qqGroupQrUrl         String?                @default("")
+  registerDeadline     DateTime?
+  startAt              DateTime?
+  mentor               Mentor?                @relation(fields: [mentorId], references: [id], map: "Activity_mentorId_fkey")
+  activityregistration ActivityRegistration[]
+  favorite             Favorite[]
+
+  @@index([mentorId], map: "Activity_mentorId_idx")
+  @@map("Activity")
+}
+
+model ActivityRegistration {
+  id         Int                         @id @default(autoincrement())
+  activityId Int
+  userId     Int
+  status     activityregistration_status @default(REGISTERED)
+  reason     String?                     @db.Text
+  createdAt  DateTime                    @default(now())
+  canceledAt DateTime?
+  reviewNote String                      @default("")
+  attended   Boolean                     @default(false)
+  markedAt   DateTime?
+  noShow     Boolean                     @default(false)
+  activity   Activity                    @relation(fields: [activityId], references: [id], map: "ActivityRegistration_activityId_fkey")
+  user       User                        @relation(fields: [userId], references: [id], map: "ActivityRegistration_userId_fkey")
+
+  @@unique([activityId, userId], map: "ActivityRegistration_activityId_userId_key")
+  @@index([userId], map: "ActivityRegistration_userId_idx")
+  @@map("ActivityRegistration")
+}
+
+/// Prisma model mapped to table `class` (reserved word), exposed as `Class`.
+model Class {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique(map: "Class_name_key")
+  createdAt DateTime @default(now())
+
+  @@map("class")
+}
+
+model Favorite {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  activityId Int
+  createdAt  DateTime @default(now())
+  activity   Activity @relation(fields: [activityId], references: [id], map: "Favorite_activityId_fkey")
+  user       User     @relation(fields: [userId], references: [id], map: "Favorite_userId_fkey")
+
+  @@unique([userId, activityId], map: "Favorite_userId_activityId_key")
+  @@index([activityId], map: "Favorite_activityId_idx")
+  @@index([userId], map: "Favorite_userId_idx")
+  @@map("Favorite")
+}
+
+model HeroSlide {
+  id        Int       @id @default(autoincrement())
+  imageUrl  String
+  alt       String    @default("")
+  sortOrder Int       @default(0)
+  published Boolean   @default(true)
+  startsAt  DateTime?
+  endsAt    DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime
+
+  @@index([published, startsAt, endsAt, sortOrder], map: "HeroSlide_published_startsAt_endsAt_sortOrder_idx")
+  @@map("HeroSlide")
+}
+
+model Announcement {
+  id                     Int       @id @default(autoincrement())
+  title                  String
+  summary                String    @default("")
+  content                String    @db.Text
+  published              Boolean   @default(false)
+  publishedAt            DateTime?
+  attachmentPath         String?
+  attachmentOriginalName String?   @default("")
+  attachmentMimeType     String?   @default("")
+  attachmentSizeBytes    Int?
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+
+  @@index([published, publishedAt], map: "Announcement_published_publishedAt_idx")
+  @@map("Announcement")
+}
+
+model Mentor {
+  id        Int        @id @default(autoincrement())
+  name      String
+  title     String     @default("")
+  photoUrl  String?    @default("")
+  bio       String?    @db.Text
+  tags      String     @default("")
+  createdAt DateTime   @default(now())
+  updatedAt DateTime
+  activity  Activity[]
+  @@map("Mentor")
+}
+
+model User {
+  id                   Int                    @id @default(autoincrement())
+  studentId            String                 @unique(map: "User_studentId_key")
+  password             String
+  role                 user_role              @default(STUDENT)
+  createdAt            DateTime               @default(now())
+  className            String                 @default("")
+  contact              String                 @default("")
+  name                 String                 @default("")
+  adminLevel           user_adminLevel?
+  plainPassword        String                 @default("")
+  bannedCount          Int                    @default(0)
+  bannedNote           String                 @default("")
+  bannedUntil          DateTime?
+  // WeChat Mini Program binding fields
+  weappOpenId          String?                @unique(map: "User_weappOpenId_key")
+  weappUnionId         String?
+  weappBoundAt         DateTime?
+  activityregistration ActivityRegistration[]
+  favorite             Favorite[]
+  @@map("User")
+}
+
+enum user_role {
+  STUDENT
+  ADMIN
+}
+
+enum activityregistration_status {
+  REGISTERED
+  PENDING_CANCEL
+  CANCELED
+}
+
+enum activity_status {
+  DRAFT
+  PUBLISHED
+  OPEN
+  CLOSED
+  FINISHED
+  CANCELED
+}
+
+enum user_adminLevel {
+  MENGSUILIANYUN
+  SUPERVISOR
+  OWNER_PRIMARY
+  OWNER_SECONDARY
+  STAFF
+}
